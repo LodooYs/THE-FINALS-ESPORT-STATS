@@ -7,3 +7,983 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@400;500;600&display=swap');
 
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0e0b1a;
+  --bg2: #160e2a;
+  --bg3: #1e1438;
+  --bg4: #251848;
+  --purple: #6b3fa0;
+  --purple-light: #8b5cc4;
+  --purple-dim: #3a2060;
+  --orange: #f47c20;
+  --green: #4ecf82;
+  --red: #e05252;
+  --yellow: #f5c518;
+  --text: #e8e0f5;
+  --text-dim: #9080b0;
+  --border: #2e1f52;
+  --header-h: 72px;
+}
+
+body {
+  font-family: 'Barlow', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  font-size: 14px;
+}
+
+/* ===== HEADER ===== */
+.header {
+  background: var(--bg2);
+  border-bottom: 2px solid var(--purple-dim);
+  height: var(--header-h);
+  display: flex;
+  align-items: center;
+  padding: 0 28px;
+  gap: 32px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: #fff;
+  text-transform: uppercase;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.logo-accent { color: var(--orange); }
+
+.page-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 36px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #fff;
+  flex: 1;
+  text-align: center;
+}
+
+.nav-tabs {
+  display: flex;
+  gap: 4px;
+}
+.nav-tab {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 7px 16px;
+  border: 1.5px solid var(--purple-dim);
+  background: transparent;
+  color: var(--text-dim);
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.15s;
+}
+.nav-tab:hover { border-color: var(--purple-light); color: var(--text); }
+.nav-tab.active { background: var(--purple); border-color: var(--purple); color: #fff; }
+
+.btn-reset {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 8px 18px;
+  background: var(--green);
+  color: #0a1f12;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: opacity 0.15s;
+  white-space: nowrap;
+}
+.btn-reset:hover { opacity: 0.85; }
+
+/* ===== FILTER BAR ===== */
+.filter-section {
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 28px;
+}
+.filter-hint {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 10px;
+}
+.filter-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.filter-group { position: relative; }
+.filter-select {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: var(--bg3);
+  color: var(--text);
+  border: 1.5px solid var(--purple-dim);
+  border-radius: 4px;
+  padding: 7px 28px 7px 12px;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  min-width: 130px;
+  transition: border-color 0.15s;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%238b5cc4' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+}
+.filter-select:focus { outline: none; border-color: var(--purple-light); }
+.filter-select:hover { border-color: var(--purple-light); }
+.filter-select.active { border-color: var(--orange); color: var(--orange); }
+
+.slider-wrap { display: flex; flex-direction: column; gap: 4px; min-width: 180px; }
+.slider-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+.slider-row { display: flex; align-items: center; gap: 8px; }
+input[type=range] {
+  flex: 1; accent-color: var(--green); height: 4px; cursor: pointer;
+}
+.slider-val { font-size: 12px; font-weight: 600; color: var(--green); min-width: 20px; }
+
+/* ===== MAIN ===== */
+.main { padding: 24px 28px; }
+
+/* ===== PAGE VIEWS ===== */
+.page-view { display: none; }
+.page-view.active { display: block; }
+
+/* ===== STATS SUMMARY ===== */
+.summary-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 10px;
+  margin-bottom: 22px;
+}
+.stat-box {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 12px 16px;
+}
+.stat-box-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 4px;
+}
+.stat-box-val {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 26px;
+  font-weight: 700;
+  color: #fff;
+}
+.stat-box-val.orange { color: var(--orange); }
+.stat-box-val.green { color: var(--green); }
+
+/* ===== TABLE ===== */
+.table-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+.table-card-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--orange);
+  padding: 12px 16px 10px;
+  border-bottom: 1px solid var(--border);
+}
+.tbl-wrap { overflow-x: auto; }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  min-width: 700px;
+}
+thead th {
+  background: var(--bg3);
+  padding: 9px 10px;
+  text-align: left;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--orange);
+  border-bottom: 2px solid var(--purple-dim);
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+}
+thead th:hover { color: #fff; }
+thead th.sort-asc::after { content: ' ↑'; }
+thead th.sort-desc::after { content: ' ↓'; }
+tbody tr { border-bottom: 1px solid rgba(46,31,82,0.6); transition: background 0.1s; }
+tbody tr:last-child { border-bottom: none; }
+tbody tr:hover { background: var(--bg3); }
+tbody td { padding: 8px 10px; color: var(--text); white-space: nowrap; }
+td.num { text-align: right; font-variant-numeric: tabular-nums; }
+td.rank { color: var(--text-dim); font-weight: 600; text-align: center; }
+
+.badge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 2px 7px;
+  border-radius: 3px;
+}
+.badge-heavy { background: #3a1414; color: #e87070; }
+.badge-medium { background: #142038; color: #70b0f0; }
+.badge-light { background: #142814; color: #70d080; }
+.badge-1 { background: #3a2a00; color: #f5c518; }
+.badge-2 { background: #202030; color: #a0a8c0; }
+.badge-3 { background: #2a1800; color: #b07040; }
+
+.pill {
+  display: inline-block;
+  background: var(--bg4);
+  border: 1px solid var(--purple-dim);
+  border-radius: 3px;
+  padding: 2px 8px;
+  font-size: 11px;
+}
+
+/* ===== KDA COLOR ===== */
+.kda-hi { color: var(--green); font-weight: 600; }
+.kda-mid { color: var(--yellow); }
+.kda-lo { color: var(--red); }
+
+.wr-hi { color: var(--green); font-weight: 600; }
+.wr-mid { color: var(--yellow); }
+.wr-lo { color: var(--red); }
+
+/* ===== MINI BAR ===== */
+.bar-cell { min-width: 80px; }
+.mini-bar-bg { background: var(--bg4); height: 5px; border-radius: 3px; overflow: hidden; }
+.mini-bar-fill { height: 100%; border-radius: 3px; background: var(--purple-light); }
+
+/* ===== LOADOUT GRID ===== */
+.loadout-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+@media (max-width: 900px) { .loadout-grid { grid-template-columns: 1fr; } }
+
+/* ===== MAP GRID ===== */
+.map-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.games-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+@media (max-width: 900px) {
+  .map-grid { grid-template-columns: 1fr; }
+  .games-grid { grid-template-columns: repeat(2,1fr); }
+}
+
+.section-heading {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--orange);
+  text-align: center;
+  margin-bottom: 16px;
+}
+.subsection-heading {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+/* ===== PAGINATION ===== */
+.pagination { display: flex; gap: 6px; align-items: center; padding: 12px 16px; justify-content: center; }
+.page-btn {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 5px 12px;
+  border: 1px solid var(--purple-dim);
+  background: transparent;
+  color: var(--text-dim);
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.page-btn:hover, .page-btn.active { background: var(--purple); border-color: var(--purple); color: #fff; }
+.page-info { font-size: 12px; color: var(--text-dim); }
+
+/* ===== FOOTER ===== */
+.footer {
+  border-top: 1px solid var(--border);
+  padding: 14px 28px;
+  text-align: center;
+  font-size: 11px;
+  color: var(--text-dim);
+  letter-spacing: 0.05em;
+}
+.footer a { color: var(--purple-light); text-decoration: none; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="logo">
+    THE FINALS <span class="logo-accent">▲</span>
+  </div>
+  <div class="page-title" id="page-title">PLAYERS RANKING</div>
+  <nav class="nav-tabs">
+    <button class="nav-tab active" onclick="showPage('players')">Players</button>
+    <button class="nav-tab" onclick="showPage('loadouts')">Loadouts</button>
+    <button class="nav-tab" onclick="showPage('maps')">Maps & Stats</button>
+    <button class="nav-tab" onclick="showPage('matches')">Matches</button>
+  </nav>
+  <button class="btn-reset" onclick="resetFilters()">Reset All Filters</button>
+</header>
+
+<!-- FILTER BAR -->
+<section class="filter-section">
+  <div class="filter-hint">Use these filters to change the results of the table</div>
+  <div class="filter-grid" id="filter-grid">
+    <div class="filter-group">
+      <select class="filter-select" id="f-season" onchange="applyFilters()">
+        <option value="">Season ▾</option>
+        <option>S0</option><option>S1</option><option>S2</option><option>S3</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <select class="filter-select" id="f-tournament" onchange="applyFilters()">
+        <option value="">Tournament ▾</option>
+        <option>PHL S0</option><option>PHL S1</option><option>PHL S2</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <select class="filter-select" id="f-phase" onchange="applyFilters()">
+        <option value="">Phase ▾</option>
+        <option>Playdays</option><option>Finals</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <select class="filter-select" id="f-team" onchange="applyFilters()">
+        <option value="">Team ▾</option>
+        <option>Aimerz Red</option><option>Crutches</option>
+        <option>Divine Dead</option><option>Gamblers</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <select class="filter-select" id="f-class" onchange="applyFilters()">
+        <option value="">Class ▾</option>
+        <option>Heavy</option><option>Medium</option><option>Light</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <select class="filter-select" id="f-spec" onchange="applyFilters()">
+        <option value="">Spec ▾</option>
+        <option>Mesh Shield</option><option>Winch Claw</option>
+        <option>Evasive Dash</option><option>Healing Beam</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <select class="filter-select" id="f-region" onchange="applyFilters()">
+        <option value="">Region ▾</option>
+        <option>EU</option><option>NA</option><option>APAC</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <select class="filter-select" id="f-map" onchange="applyFilters()">
+        <option value="">Map ▾</option>
+        <option>Las Vegas Stadium</option><option>SYS$HORIZON</option>
+        <option>Skyway Stadium</option><option>Fortune Stadium</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <select class="filter-select" id="f-gamemode" onchange="applyFilters()">
+        <option value="">Gamemode ▾</option>
+        <option>Cashout</option><option>Final Round</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <select class="filter-select" id="f-player" onchange="applyFilters()">
+        <option value="">Player ▾</option>
+        <option>perzzon</option><option>atelco</option><option>F3RR3OS</option>
+        <option>BestRig</option><option>yo1p</option><option>BRONX</option>
+        <option>RXZE</option><option>aloneinparis</option><option>OIIl</option>
+        <option>DEVILSWOR</option><option>FoI1n</option><option>kireki</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <select class="filter-select" id="f-weapon" onchange="applyFilters()">
+        <option value="">Weapon ▾</option>
+        <option>Mesh Shield</option><option>FAMAS</option><option>ARN-22</option>
+        <option>SHAK-5i</option><option>SH1900</option><option>XP-54</option>
+        <option>FCAR</option><option>Winch Claw</option><option>SA1216</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <select class="filter-select" id="f-gadget" onchange="applyFilters()">
+        <option value="">Gadgets ▾</option>
+        <option>RPG-7</option><option>C4</option><option>Jump Pad</option>
+        <option>Dome Shield</option><option>Gateway</option>
+      </select>
+    </div>
+    <div class="slider-wrap">
+      <div class="slider-label">Min. Games</div>
+      <div class="slider-row">
+        <input type="range" id="f-mingames" min="0" max="50" value="0" oninput="document.getElementById('mg-val').textContent=this.value; applyFilters()">
+        <span class="slider-val" id="mg-val">0</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MAIN CONTENT -->
+<main class="main">
+
+  <!-- ===== PLAYERS ===== -->
+  <div class="page-view active" id="page-players">
+    <div class="summary-row" id="players-summary"></div>
+    <div class="table-card">
+      <div class="table-card-title">Player Stats</div>
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th onclick="sortTable('players','rank')">#</th>
+              <th onclick="sortTable('players','team')">Team</th>
+              <th onclick="sortTable('players','player')">Player</th>
+              <th onclick="sortTable('players','cls')">Class</th>
+              <th onclick="sortTable('players','kills')">Kills</th>
+              <th onclick="sortTable('players','assists')">Assists</th>
+              <th onclick="sortTable('players','deaths')">Deaths</th>
+              <th onclick="sortTable('players','kda')">KDA</th>
+              <th onclick="sortTable('players','avrgKill')">Avrg Kill</th>
+              <th onclick="sortTable('players','avrgAssist')">Avrg Assist</th>
+              <th onclick="sortTable('players','avrgDeath')">Avrg Death</th>
+              <th onclick="sortTable('players','dpm')">DPM</th>
+              <th onclick="sortTable('players','spm')">SPM</th>
+              <th onclick="sortTable('players','dmgShare')">% Dmg Share</th>
+              <th onclick="sortTable('players','wrCashout')">WR Cashout</th>
+              <th onclick="sortTable('players','wrFinal')">WR Final Round</th>
+              <th onclick="sortTable('players','games')">NB Games</th>
+            </tr>
+          </thead>
+          <tbody id="players-tbody"></tbody>
+        </table>
+      </div>
+      <div class="pagination" id="players-pagination"></div>
+    </div>
+  </div>
+
+  <!-- ===== LOADOUTS ===== -->
+  <div class="page-view" id="page-loadouts">
+    <div class="section-heading">Loadouts</div>
+    <div class="loadout-grid" id="loadout-grid">
+      <!-- JS fills 3 columns: Light / Medium / Heavy specs, then weapons -->
+    </div>
+  </div>
+
+  <!-- ===== MAPS ===== -->
+  <div class="page-view" id="page-maps">
+    <div class="section-heading">Maps Played</div>
+    <div class="map-grid">
+      <div class="table-card">
+        <div class="table-card-title">Cashout</div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr>
+              <th>Map</th><th>NB</th><th>%</th><th>Av Kill</th><th>Av Dmg</th>
+            </tr></thead>
+            <tbody id="maps-cashout-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="table-card">
+        <div class="table-card-title">Final Round</div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr>
+              <th>Map</th><th>NB</th><th>%</th><th>Av Kill</th><th>Av Dmg</th>
+            </tr></thead>
+            <tbody id="maps-final-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="section-heading">Games Played</div>
+    <div class="games-grid">
+      <div class="table-card">
+        <div class="table-card-title">Season</div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Season</th><th>NB</th><th>%</th><th>Av Kill</th><th>Av Dmg</th></tr></thead>
+            <tbody id="games-season-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="table-card">
+        <div class="table-card-title">Tournament</div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Tournament</th><th>NB</th><th>%</th><th>Av Kill</th><th>Av Dmg</th></tr></thead>
+            <tbody id="games-tourn-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="table-card">
+        <div class="table-card-title">Region</div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Region</th><th>NB</th><th>%</th><th>Av Kill</th><th>Av Dmg</th></tr></thead>
+            <tbody id="games-region-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="table-card">
+        <div class="table-card-title">Gamemode</div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Gamemode</th><th>NB</th><th>%</th><th>Av Kill</th><th>Av Dmg</th></tr></thead>
+            <tbody id="games-gm-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== MATCHES ===== -->
+  <div class="page-view" id="page-matches">
+    <div class="summary-row" id="matches-summary"></div>
+    <div class="table-card">
+      <div class="table-card-title">Match Log</div>
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th onclick="sortTable('matches','team')">Team</th>
+              <th onclick="sortTable('matches','player')">Player</th>
+              <th onclick="sortTable('matches','cls')">Class</th>
+              <th onclick="sortTable('matches','weapon')">Weapon</th>
+              <th onclick="sortTable('matches','map')">Map</th>
+              <th onclick="sortTable('matches','gamemode')">Mode</th>
+              <th onclick="sortTable('matches','kills')">K</th>
+              <th onclick="sortTable('matches','assists')">A</th>
+              <th onclick="sortTable('matches','deaths')">D</th>
+              <th onclick="sortTable('matches','kda')">KDA</th>
+              <th onclick="sortTable('matches','dmg')">Dmg</th>
+              <th onclick="sortTable('matches','place')">Place</th>
+              <th onclick="sortTable('matches','cashout')">Cashout</th>
+            </tr>
+          </thead>
+          <tbody id="matches-tbody"></tbody>
+        </table>
+      </div>
+      <div class="pagination" id="matches-pagination"></div>
+    </div>
+  </div>
+
+</main>
+
+<footer class="footer">
+  The Finals Esport Tracker · Powered by community data · Connect your Google Sheet via the DATA array below
+</footer>
+
+<script>
+let RAW = []; 
+
+// =====================================================================
+// POUR CHARGER DEPUIS TON GOOGLE SHEET (décommenter et adapter) :
+// =====================================================================
+// async function loadData() {
+//   const SHEET_ID = 'https://docs.google.com/spreadsheets/d/1v9LblST1TS1jZ8BLeIh6Dmet0KDeBtFND_y3A5_4jcE/edit?usp=sharing';
+//   const API_KEY = 'AIzaSyBzZzD2ld8H7LS8mNF6gw0ZeVFaYlaHC18';
+//   const RANGE = 'Sheet1!A1:BB13000';
+//   const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${RANGE}?key=${}`;
+//   const res = await fetch(url);
+//   const json = await res.json();
+//   const [headers, ...rows] = json.values;
+//   RAW = rows.map(r => Object.fromEntries(headers.map((h,i) => [h, r[i]])));
+//   init();
+// }
+// loadData();
+// =====================================================================
+
+let filtered = [...RAW];
+let currentSort = { col: null, dir: 'desc' };
+let currentPage = { players: 1, matches: 1 };
+const PER_PAGE = 25;
+
+// ---- UTILS ----
+const kdaClass = v => v >= 3 ? 'kda-hi' : v >= 1.5 ? 'kda-mid' : 'kda-lo';
+const wrClass  = v => v >= 55 ? 'wr-hi' : v >= 40 ? 'wr-mid' : 'wr-lo';
+const clsBadge = c => {
+  const m = {HEAVY:'badge-heavy',MEDIUM:'badge-medium',LIGHT:'badge-light'};
+  return `<span class="badge ${m[c]||''}">${c}</span>`;
+};
+const placeBadge = p => {
+  const m = {1:'badge-1',2:'badge-2',3:'badge-3'};
+  return `<span class="badge ${m[p]||''}">#${p}</span>`;
+};
+const cashFmt = v => v > 0 ? `$${v.toLocaleString()}` : `<span style="color:var(--text-dim)">–</span>`;
+const pct = (a,b) => b ? Math.round(a/b*100) : 0;
+
+// ---- FILTERS ----
+function getFilters() {
+  return {
+    season:     document.getElementById('f-season').value,
+    tournament: document.getElementById('f-tournament').value,
+    phase:      document.getElementById('f-phase').value,
+    team:       document.getElementById('f-team').value,
+    cls:        document.getElementById('f-class').value,
+    spec:       document.getElementById('f-spec').value,
+    region:     document.getElementById('f-region').value,
+    map:        document.getElementById('f-map').value,
+    gamemode:   document.getElementById('f-gamemode').value,
+    player:     document.getElementById('f-player').value,
+    weapon:     document.getElementById('f-weapon').value,
+    gadget:     document.getElementById('f-gadget').value,
+    minGames:   parseInt(document.getElementById('f-mingames').value) || 0,
+  };
+}
+
+function applyFilters() {
+  const f = getFilters();
+  filtered = RAW.filter(r => {
+    if (f.season     && r.season !== f.season) return false;
+    if (f.tournament && r.tournament !== f.tournament) return false;
+    if (f.phase      && r.phase !== f.phase) return false;
+    if (f.team       && r.team !== f.team) return false;
+    if (f.cls        && r.cls !== f.cls.toUpperCase()) return false;
+    if (f.region     && r.region !== f.region) return false;
+    if (f.map        && r.map !== f.map) return false;
+    if (f.gamemode   && r.gamemode !== f.gamemode.toUpperCase()) return false;
+    if (f.player     && r.player !== f.player) return false;
+    return true;
+  });
+  document.querySelectorAll('.filter-select').forEach(s => {
+    s.classList.toggle('active', s.value !== '');
+  });
+  currentPage.players = 1; currentPage.matches = 1;
+  renderAll();
+}
+
+function resetFilters() {
+  document.querySelectorAll('.filter-select').forEach(s => { s.value = ''; s.classList.remove('active'); });
+  document.getElementById('f-mingames').value = 0;
+  document.getElementById('mg-val').textContent = '0';
+  filtered = [...RAW];
+  currentPage.players = 1; currentPage.matches = 1;
+  renderAll();
+}
+
+// ---- SORT ----
+function sortTable(view, col) {
+  if (currentSort.col === col) currentSort.dir = currentSort.dir === 'desc' ? 'asc' : 'desc';
+  else { currentSort.col = col; currentSort.dir = 'desc'; }
+  currentPage[view] = 1;
+  renderAll();
+}
+
+// ---- AGGREGATE: PLAYERS ----
+function getPlayerRows() {
+  const map = {};
+  filtered.forEach(r => {
+    const k = r.player;
+    if (!map[k]) map[k] = {team:r.team,player:r.player,cls:r.cls,k:0,a:0,d:0,dmg:0,wins:0,n:0,cashout:0};
+    const p = map[k];
+    p.k+=r.kills; p.a+=r.assists; p.d+=r.deaths; p.dmg+=r.dmg; p.n++;
+    if (r.place===1) p.wins++;
+  });
+  return Object.values(map).map(p => ({
+    team: p.team, player: p.player, cls: p.cls,
+    kills: p.k, assists: p.a, deaths: p.d,
+    kda: +((p.k+p.a/2)/Math.max(p.d,1)).toFixed(2),
+    avrgKill:   +(p.k/p.n).toFixed(1),
+    avrgAssist: +(p.a/p.n).toFixed(1),
+    avrgDeath:  +(p.d/p.n).toFixed(1),
+    dpm: Math.round(p.dmg/p.n),
+    spm: Math.round(p.dmg/(p.n*15)),
+    dmgShare: 32,
+    wrCashout: Math.round(p.wins/p.n*100),
+    wrFinal:   Math.round(p.wins/p.n*70),
+    games: p.n,
+  }));
+}
+
+function renderPlayers() {
+  let rows = getPlayerRows();
+  const minG = parseInt(document.getElementById('f-mingames').value)||0;
+  rows = rows.filter(r => r.games >= minG);
+  if (currentSort.col) {
+    rows.sort((a,b) => {
+      const v = currentSort.dir==='asc' ? 1 : -1;
+      return a[currentSort.col] > b[currentSort.col] ? v : -v;
+    });
+  } else {
+    rows.sort((a,b) => b.kills - a.kills);
+  }
+  const total = rows.length;
+  const start = (currentPage.players-1)*PER_PAGE;
+  const page  = rows.slice(start, start+PER_PAGE);
+
+  document.getElementById('players-tbody').innerHTML = page.map((r,i) => `
+    <tr>
+      <td class="rank">${start+i+1}</td>
+      <td><span class="pill">${r.team}</span></td>
+      <td style="font-weight:600;color:#fff">${r.player}</td>
+      <td>${clsBadge(r.cls)}</td>
+      <td class="num">${r.kills.toLocaleString()}</td>
+      <td class="num" style="color:var(--text-dim)">${r.assists.toLocaleString()}</td>
+      <td class="num" style="color:var(--red)">${r.deaths.toLocaleString()}</td>
+      <td class="num ${kdaClass(r.kda)}">${r.kda.toFixed(2)}</td>
+      <td class="num">${r.avrgKill.toFixed(1)}</td>
+      <td class="num">${r.avrgAssist.toFixed(1)}</td>
+      <td class="num">${r.avrgDeath.toFixed(1)}</td>
+      <td class="num" style="color:var(--orange)">${r.dpm.toLocaleString()}</td>
+      <td class="num">${r.spm.toLocaleString()}</td>
+      <td class="num">${r.dmgShare}%</td>
+      <td class="num ${wrClass(r.wrCashout)}">${r.wrCashout}%</td>
+      <td class="num ${wrClass(r.wrFinal)}">${r.wrFinal}%</td>
+      <td class="num" style="color:var(--text-dim)">${r.games}</td>
+    </tr>`).join('');
+
+  // Summary cards
+  const totalK = rows.reduce((s,r)=>s+r.kills,0);
+  const avgKDA = rows.length ? (rows.reduce((s,r)=>s+r.kda,0)/rows.length).toFixed(2) : '—';
+  document.getElementById('players-summary').innerHTML = `
+    <div class="stat-box"><div class="stat-box-label">Players</div><div class="stat-box-val">${rows.length}</div></div>
+    <div class="stat-box"><div class="stat-box-label">Total Kills</div><div class="stat-box-val orange">${totalK.toLocaleString()}</div></div>
+    <div class="stat-box"><div class="stat-box-label">Avg KDA</div><div class="stat-box-val green">${avgKDA}</div></div>
+    <div class="stat-box"><div class="stat-box-label">Games</div><div class="stat-box-val">${filtered.length}</div></div>`;
+
+  renderPagination('players', total);
+}
+
+// ---- LOADOUTS ----
+function renderLoadouts() {
+  const specs = {LIGHT:{},MEDIUM:{},HEAVY:{}};
+  const wpns  = {LIGHT:{},MEDIUM:{},HEAVY:{}};
+  filtered.forEach(r => {
+    const c = r.cls;
+    if (!specs[c]) return;
+    specs[c][r.spec] = (specs[c][r.spec]||0)+1;
+    wpns[c][r.weapon] = (wpns[c][r.weapon]||0)+1;
+  });
+  const clsColors = {LIGHT:'var(--green)',MEDIUM:'var(--purple-light)',HEAVY:'var(--red)'};
+  const clsTotal = cl => Object.values(specs[cl]).reduce((s,v)=>s+v,0)||1;
+  const mkTable = (obj, total, col) => {
+    const sorted = Object.entries(obj).sort((a,b)=>b[1]-a[1]);
+    if (!sorted.length) return '<tr><td colspan="4" style="color:var(--text-dim);text-align:center;padding:12px">No data</td></tr>';
+    const maxN = sorted[0][1];
+    return sorted.map(([name,nb]) => {
+      const p = Math.round(nb/total*100);
+      const barW = Math.round(nb/maxN*100);
+      return `<tr>
+        <td style="color:${col};font-weight:600;font-size:12px">${name}</td>
+        <td class="num">${nb}</td>
+        <td class="num">${p}%</td>
+        <td class="bar-cell"><div class="mini-bar-bg"><div class="mini-bar-fill" style="width:${barW}%;background:${col}"></div></div></td>
+      </tr>`;
+    }).join('');
+  };
+  const mkCard = (cls, label) => {
+    const col = clsColors[cls];
+    const tot = clsTotal(cls);
+    return `
+      <div>
+        <div class="table-card" style="margin-bottom:12px">
+          <div class="table-card-title" style="color:${col}">${label} · Specs</div>
+          <div class="tbl-wrap"><table>
+            <thead><tr><th>Spec</th><th>NB</th><th>%</th><th>Usage</th></tr></thead>
+            <tbody>${mkTable(specs[cls],tot,col)}</tbody>
+          </table></div>
+        </div>
+        <div class="table-card">
+          <div class="table-card-title" style="color:${col}">${label} · Weapons</div>
+          <div class="tbl-wrap"><table>
+            <thead><tr><th>Weapon</th><th>NB</th><th>%</th><th>Usage</th></tr></thead>
+            <tbody>${mkTable(wpns[cls],tot,col)}</tbody>
+          </table></div>
+        </div>
+      </div>`;
+  };
+  document.getElementById('loadout-grid').innerHTML =
+    mkCard('LIGHT','Light') + mkCard('MEDIUM','Medium') + mkCard('HEAVY','Heavy');
+}
+
+// ---- MAPS ----
+function renderMaps() {
+  const mapsCO = {}, mapsFR = {};
+  const seasons={}, tourns={}, regions={}, gamemodes={};
+  filtered.forEach(r => {
+    const addTo = (obj, key) => {
+      if (!obj[key]) obj[key]={nb:0,kills:0,dmg:0};
+      obj[key].nb++; obj[key].kills+=r.kills; obj[key].dmg+=r.dmg;
+    };
+    addTo(mapsCO, r.map);
+    addTo(mapsFR, r.map);
+    addTo(seasons, r.season);
+    addTo(tourns,  r.tournament);
+    addTo(regions, r.region);
+    addTo(gamemodes, r.gamemode);
+  });
+  const mkMapRows = obj => {
+    const arr = Object.entries(obj).sort((a,b)=>b[1].nb-a[1].nb);
+    const tot = arr.reduce((s,[,v])=>s+v.nb,0)||1;
+    return arr.map(([map,v]) => `<tr>
+      <td style="color:var(--orange);font-weight:600;font-size:12px">${map}</td>
+      <td class="num">${v.nb}</td>
+      <td class="num">${Math.round(v.nb/tot*100)}%</td>
+      <td class="num">${v.nb ? (v.kills/v.nb).toFixed(1) : '—'}</td>
+      <td class="num">${v.nb ? Math.round(v.dmg/v.nb).toLocaleString() : '—'}</td>
+    </tr>`).join('');
+  };
+  document.getElementById('maps-cashout-tbody').innerHTML = mkMapRows(mapsCO);
+  document.getElementById('maps-final-tbody').innerHTML   = mkMapRows(mapsFR);
+  const mkGRows = obj => {
+    const arr = Object.entries(obj).sort((a,b)=>b[1].nb-a[1].nb);
+    const tot = arr.reduce((s,[,v])=>s+v.nb,0)||1;
+    return arr.map(([k,v]) => `<tr>
+      <td style="color:var(--purple-light);font-weight:600;font-size:12px">${k}</td>
+      <td class="num">${v.nb}</td>
+      <td class="num">${Math.round(v.nb/tot*100)}%</td>
+      <td class="num">${v.nb ? (v.kills/v.nb).toFixed(1) : '—'}</td>
+      <td class="num">${v.nb ? Math.round(v.dmg/v.nb).toLocaleString() : '—'}</td>
+    </tr>`).join('');
+  };
+  document.getElementById('games-season-tbody').innerHTML  = mkGRows(seasons);
+  document.getElementById('games-tourn-tbody').innerHTML   = mkGRows(tourns);
+  document.getElementById('games-region-tbody').innerHTML  = mkGRows(regions);
+  document.getElementById('games-gm-tbody').innerHTML      = mkGRows(gamemodes);
+}
+
+// ---- MATCHES ----
+function renderMatches() {
+  let rows = [...filtered];
+  if (currentSort.col) {
+    rows.sort((a,b) => {
+      const v = currentSort.dir==='asc' ? 1 : -1;
+      return a[currentSort.col] > b[currentSort.col] ? v : -v;
+    });
+  }
+  const total = rows.length;
+  const start = (currentPage.matches-1)*PER_PAGE;
+  const page  = rows.slice(start, start+PER_PAGE);
+  document.getElementById('matches-tbody').innerHTML = page.map((r,i) => `
+    <tr>
+      <td class="rank" style="color:var(--text-dim)">${start+i+1}</td>
+      <td><span class="pill">${r.team}</span></td>
+      <td style="font-weight:600;color:#fff">${r.player}</td>
+      <td>${clsBadge(r.cls)}</td>
+      <td style="color:var(--text-dim)">${r.weapon}</td>
+      <td style="color:var(--purple-light)">${r.map}</td>
+      <td style="color:var(--text-dim);font-size:11px">${r.gamemode}</td>
+      <td class="num">${r.kills}</td>
+      <td class="num" style="color:var(--text-dim)">${r.assists}</td>
+      <td class="num" style="color:var(--red)">${r.deaths}</td>
+      <td class="num ${kdaClass(r.kda)}">${r.kda.toFixed(1)}</td>
+      <td class="num" style="color:var(--orange)">${r.dmg.toLocaleString()}</td>
+      <td>${placeBadge(r.place)}</td>
+      <td>${cashFmt(r.cashout)}</td>
+    </tr>`).join('');
+
+  const avgKDA = rows.length ? (rows.reduce((s,r)=>s+r.kda,0)/rows.length).toFixed(2) : '—';
+  document.getElementById('matches-summary').innerHTML = `
+    <div class="stat-box"><div class="stat-box-label">Matches</div><div class="stat-box-val">${rows.length}</div></div>
+    <div class="stat-box"><div class="stat-box-label">Total Kills</div><div class="stat-box-val orange">${rows.reduce((s,r)=>s+r.kills,0).toLocaleString()}</div></div>
+    <div class="stat-box"><div class="stat-box-label">Avg KDA</div><div class="stat-box-val green">${avgKDA}</div></div>
+    <div class="stat-box"><div class="stat-box-label">Total Cashout</div><div class="stat-box-val">${('$'+rows.reduce((s,r)=>s+r.cashout,0).toLocaleString())}</div></div>`;
+
+  renderPagination('matches', total);
+}
+
+// ---- PAGINATION ----
+function renderPagination(view, total) {
+  const pages = Math.ceil(total / PER_PAGE);
+  const cur = currentPage[view];
+  let html = '';
+  if (pages <= 1) { document.getElementById(view+'-pagination').innerHTML=''; return; }
+  if (cur > 1) html += `<button class="page-btn" onclick="goPage('${view}',${cur-1})">‹</button>`;
+  for (let p = Math.max(1,cur-2); p <= Math.min(pages,cur+2); p++) {
+    html += `<button class="page-btn${p===cur?' active':''}" onclick="goPage('${view}',${p})">${p}</button>`;
+  }
+  if (cur < pages) html += `<button class="page-btn" onclick="goPage('${view}',${cur+1})">›</button>`;
+  html += `<span class="page-info">${total} lignes · page ${cur}/${pages}</span>`;
+  document.getElementById(view+'-pagination').innerHTML = html;
+}
+
+function goPage(view, p) { currentPage[view] = p; renderAll(); }
+
+// ---- PAGE NAV ----
+const PAGE_TITLES = {players:'PLAYERS RANKING',loadouts:'LOADOUTS',maps:'MAPS AND STATS',matches:'MATCH LOG'};
+function showPage(id) {
+  document.querySelectorAll('.page-view').forEach(el => el.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  document.querySelectorAll('.nav-tab').forEach((btn,i) => {
+    btn.classList.toggle('active', ['players','loadouts','maps','matches'][i]===id);
+  });
+  document.getElementById('page-title').textContent = PAGE_TITLES[id] || '';
+}
+
+// ---- RENDER ALL ----
+function renderAll() {
+  renderPlayers();
+  renderLoadouts();
+  renderMaps();
+  renderMatches();
+}
+
+renderAll();
+</script>
+</body>
+</html>
